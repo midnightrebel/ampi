@@ -1,7 +1,7 @@
 from django.db.models import F
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import mixins, generics
+from rest_framework import mixins, generics, viewsets
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
@@ -24,7 +24,7 @@ filter_query_params = [
 ]
 
 
-class FileViewSet(generics.RetrieveUpdateDestroyAPIView):
+class FileViewSet(generics.RetrieveUpdateDestroyAPIView,generics.ListAPIView, GenericViewSet):
     serializer_class = FileSerializer
     parser_classes = MultiPartParser
     queryset = File.objects.all().order_by('id')
@@ -34,9 +34,6 @@ class FileViewSet(generics.RetrieveUpdateDestroyAPIView):
         manual_parameters=filter_query_params,
     )
     @action(detail=False, methods=['POST'],
-            parser_classes=(MultiPartParser,),
-            permission_classes=(IsAuthenticated,),
-            pagination_class=None,
             url_path='upload-file')
     def upload_file(self, request, *args, **kwargs):
         f = File.objects.create(
@@ -57,8 +54,6 @@ class FileViewSet(generics.RetrieveUpdateDestroyAPIView):
         ]
     )
     @action(detail=False, methods=['POST'],
-            parser_classes=(MultiPartParser,),
-            permission_classes=(IsAuthenticated,),
             url_path='download-file')
     def download_file(self, request):
         idf = self.request.query_params.get('id')
