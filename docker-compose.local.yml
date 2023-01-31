@@ -1,0 +1,48 @@
+version: '3.7'
+
+services:
+  postgres:
+    container_name: ampi.postgres
+    image: postgres:13.2
+    volumes:
+      - ./docker_volumes/staging/psql-data/:/var/lib/postgresql/data
+    env_file:
+      - .envs
+    ports:
+      - '5495:5432'
+    logging:
+      options:
+        max-size: 10m
+
+  postgres1:
+    container_name: ampi.postgres1
+    image: postgres:13.2
+    volumes:
+      - ./docker_volumes/staging/psql-data1/:/var/lib/postgresql/data
+    env_file:
+      - .envs1
+    ports:
+      - '5496:5432'
+    networks:
+      - ampi_backend_local
+    logging:
+      options:
+        max-size: 10m
+
+  postgres2:
+    container_name: ampi.postgres2
+    image: postgres:13.2
+    volumes:
+      - ./docker_volumes/staging/psql-data2/:/var/lib/postgresql/data
+    env_file:
+      - .envs2
+    ports:
+      - '5497:5432'
+    networks:
+      - ampi_backend_local
+    logging:
+      options:
+        max-size: 10m
+networks:
+  ampi_backend_local:
+    driver: bridge
