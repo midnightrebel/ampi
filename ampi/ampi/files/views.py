@@ -1,7 +1,7 @@
 from django.db.models import F
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import mixins, generics, viewsets
+from rest_framework import generics
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
@@ -26,7 +26,7 @@ filter_query_params = [
 
 class FileViewSet(generics.RetrieveUpdateDestroyAPIView,generics.ListAPIView, GenericViewSet):
     serializer_class = FileSerializer
-    parser_classes = MultiPartParser
+    parser_classes = [MultiPartParser]
     queryset = File.objects.all().order_by('id')
     permission_classes = [IsAuthenticated]
 
@@ -58,8 +58,7 @@ class FileViewSet(generics.RetrieveUpdateDestroyAPIView,generics.ListAPIView, Ge
     def download_file(self, request):
         idf = self.request.query_params.get('id')
         Report.objects.filter(id_file=idf).update(count_down=F('count_down') + 1)
-
-        qs = File.objects.filter(id=idf).values('file')
+        qs = File.objects.filter(id=idf)
         if qs:
             res = 'http://127.0.0.1:8000/temp/' + str(qs[0]['file'])
             return Response(res)

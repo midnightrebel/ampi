@@ -1,13 +1,5 @@
 from django.db import models
 
-from ampi.ampi.users.models import User
-
-
-# def owner(self=None):
-#     name_owner = User.objects.filter(username=self.request.user)
-#     return name_owner
-
-
 class File(models.Model):
     class Meta:
         verbose_name = 'Файл'
