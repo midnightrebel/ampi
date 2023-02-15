@@ -15,7 +15,9 @@
 #### Предварительная установка зависимостей.
 
 1. ```python -m venv venv``` - создание виртуальной среды.
-2. ```source venv/bin/activate``` - активация созданного пространства для Linux, MacOS. Для Windows команда выглядит так: ```.\venv\Scripts\activate```.
+2. ```source venv/bin/activate``` - активация созданного пространства для Linux, MacOS. Для Windows команда выглядит так:
+ 
+   ```.\venv\Scripts\activate```
 3. ```pip install -r requirements.txt```  - установка зависимостей.
 
 
