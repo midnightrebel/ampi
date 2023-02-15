@@ -43,6 +43,7 @@ services:
     logging:
       options:
         max-size: 10m
+        
 networks:
   ampi_backend_local:
     driver: bridge
