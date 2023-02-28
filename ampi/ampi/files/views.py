@@ -58,9 +58,9 @@ class FileViewSet(generics.RetrieveUpdateDestroyAPIView,generics.ListAPIView, Ge
     def download_file(self, request):
         idf = self.request.query_params.get('id')
         Report.objects.filter(id_file=idf).update(count_down=F('count_down') + 1)
-        qs = File.objects.filter(id=idf)
+        qs = File.objects.filter(id=idf).values('file')
         if qs:
             res = 'http://127.0.0.1:8000/temp/' + str(qs[0]['file'])
             return Response(res)
         else:
-            return Response(status=404)
+            return Response(data={"File not found"},status=404)

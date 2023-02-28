@@ -1,5 +1,13 @@
 class AMPIRouter:
     @classmethod
+    def db_for_read(cls, model, **hints):
+        if model._meta.app_label == 'files':
+            return 'files'
+        if model._meta.app_label == 'reports':
+            return 'reports'
+        return None
+
+    @classmethod
     def db_for_write(cls, model, **hints):
         if model._meta.app_label == 'files':
             return 'files'

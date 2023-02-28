@@ -23,7 +23,7 @@
 
 Перед началом работы нужно запустить docker-compose для запуска контейнеров, на котором находятся сервисы:
 
-```docker-compose -f docker-compose.local.up```
+```docker-compose -f docker-compose.local.yml up```
 
 #### Подключение к PostgreSQL:
 Подключаемся к PostgeSQL (datagrip, инструменты ide, иные инструменты).
